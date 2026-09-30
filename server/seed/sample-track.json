@@ -1,0 +1,366 @@
+{
+  "slug": "javascript",
+  "title": "JavaScript",
+  "description": "Learn the language of the web, from functions and scope to arrays and beyond.",
+  "path": "web",
+  "icon": "js",
+  "order": 3,
+  "status": "published",
+  "recommendedPrevious": ["html", "css"],
+  "modules": [
+    {
+      "slug": "core-fundamentals",
+      "title": "Core Fundamentals",
+      "description": "The building blocks you will use in every JavaScript program.",
+      "order": 1,
+      "status": "published",
+      "topics": [
+        {
+          "slug": "functions-and-scope",
+          "title": "Functions and Scope",
+          "summary": "Write functions, understand where variables live, and use closures.",
+          "order": 1,
+          "estimatedMinutes": 60,
+          "status": "published",
+          "lesson": {
+            "title": "Functions and Scope",
+            "estimatedMinutes": 15,
+            "contentMd": "# Functions and Scope\n\nA **function** is a reusable block of code. In modern JavaScript you will write them in a few ways:\n\n```js\nfunction add(a, b) { return a + b; }\nconst addArrow = (a, b) => a + b;\nconst greet = (name, greeting = 'Hello') => `${greeting}, ${name}!`;\n```\n\n## Scope\n\nScope decides where a variable can be seen. `let` and `const` are **block scoped**. `var` is **function scoped**.\n\n```js\nif (true) {\n  let a = 1;\n  var b = 2;\n}\nconsole.log(b); // 2\nconsole.log(a); // ReferenceError\n```\n\n## Closures\n\nA **closure** is a function that remembers the variables from the place where it was created, even after that place has finished running.\n\n```js\nfunction makeCounter() {\n  let count = 0;\n  return () => ++count;\n}\nconst next = makeCounter();\nnext(); // 1\nnext(); // 2\n```\n\n## Key points\n\n- Prefer `const`, use `let` when you must reassign, avoid `var`.\n- Functions are values: you can pass them around and return them.\n- Closures are how JavaScript keeps private state."
+          },
+          "checks": [
+            {
+              "slug": "check-var-scope",
+              "title": "Where does var live?",
+              "type": "mcq",
+              "stage": "check",
+              "difficulty": "easy",
+              "order": 1,
+              "points": 5,
+              "runner": "none",
+              "statementMd": "What does this code print?\n\n```js\nif (true) { var x = 5; }\nconsole.log(x);\n```",
+              "options": [
+                { "id": "a", "text": "5" },
+                { "id": "b", "text": "undefined" },
+                { "id": "c", "text": "ReferenceError" },
+                { "id": "d", "text": "null" }
+              ],
+              "correctOptionIds": ["a"],
+              "explanationMd": "`var` is function scoped, not block scoped, so `x` is still visible outside the `if` block.",
+              "tags": ["var", "scope"]
+            },
+            {
+              "slug": "check-closure-definition",
+              "title": "What is a closure?",
+              "type": "mcq",
+              "stage": "check",
+              "difficulty": "easy",
+              "order": 2,
+              "points": 5,
+              "runner": "none",
+              "statementMd": "Which statement best describes a closure?",
+              "options": [
+                { "id": "a", "text": "A function that runs immediately after it is defined" },
+                { "id": "b", "text": "A function that remembers variables from where it was created" },
+                { "id": "c", "text": "A function that cannot return a value" },
+                { "id": "d", "text": "A block of code wrapped in curly braces" }
+              ],
+              "correctOptionIds": ["b"],
+              "explanationMd": "A closure keeps access to the variables of its outer scope, even after the outer function has returned.",
+              "tags": ["closures"]
+            }
+          ],
+          "problems": [
+            {
+              "slug": "greet-with-default",
+              "title": "Greet with a Default",
+              "type": "coding",
+              "stage": "practice",
+              "difficulty": "easy",
+              "order": 1,
+              "points": 10,
+              "runner": "iframe-js",
+              "functionName": "greet",
+              "statementMd": "Write a function `greet(name, greeting)` that returns `greeting, name!`. If `greeting` is not given, use `Hello`.\n\n**Example**\n\n```js\ngreet('Asha');        // 'Hello, Asha!'\ngreet('Asha', 'Hi');  // 'Hi, Asha!'\n```",
+              "starterCode": {
+                "javascript": "function greet(name, greeting) {\n  // your code here\n}\n"
+              },
+              "tests": [
+                { "id": "t1", "expression": "greet('Asha')", "expected": "Hello, Asha!", "hidden": false },
+                { "id": "t2", "expression": "greet('Asha', 'Hi')", "expected": "Hi, Asha!", "hidden": false },
+                { "id": "t3", "expression": "greet('', 'Hey')", "expected": "Hey, !", "hidden": true },
+                { "id": "t4", "expression": "greet('Sam', undefined)", "expected": "Hello, Sam!", "hidden": true }
+              ],
+              "hints": ["Default parameters look like `(a, b = 1) => ...`."],
+              "tags": ["functions", "default-parameters"],
+              "timeLimitMs": 2000
+            },
+            {
+              "slug": "make-counter",
+              "title": "Make a Counter",
+              "type": "coding",
+              "stage": "practice",
+              "difficulty": "medium",
+              "order": 2,
+              "points": 20,
+              "runner": "iframe-js",
+              "functionName": "makeCounter",
+              "statementMd": "Write `makeCounter()` that returns a function. Each call to the returned function returns the next number, starting at 1. Two counters must not share their count.\n\n```js\nconst a = makeCounter();\na(); // 1\na(); // 2\nconst b = makeCounter();\nb(); // 1\n```",
+              "starterCode": {
+                "javascript": "function makeCounter() {\n  // your code here\n}\n"
+              },
+              "tests": [
+                { "id": "t1", "expression": "(() => { const c = makeCounter(); c(); c(); return c(); })()", "expected": 3, "hidden": false },
+                { "id": "t2", "expression": "(() => { const a = makeCounter(); const b = makeCounter(); a(); a(); return [a(), b()]; })()", "expected": [3, 1], "hidden": true },
+                { "id": "t3", "expression": "(() => { const c = makeCounter(); return c(); })()", "expected": 1, "hidden": true }
+              ],
+              "hints": [
+                "The count must live outside the returned function.",
+                "Declare `let count = 0` inside `makeCounter`, then return an arrow function that increments it."
+              ],
+              "tags": ["closures"],
+              "timeLimitMs": 2000
+            },
+            {
+              "slug": "memoize",
+              "title": "Memoize a Function",
+              "type": "coding",
+              "stage": "practice",
+              "difficulty": "hard",
+              "order": 3,
+              "points": 30,
+              "runner": "iframe-js",
+              "functionName": "memoize",
+              "statementMd": "Write `memoize(fn)` that returns a new function. The new function calls `fn` the first time it sees a set of arguments and returns the cached result for the same arguments afterwards. It must support any number of arguments.\n\n```js\nlet calls = 0;\nconst double = memoize(x => { calls++; return x * 2; });\ndouble(2); // 4\ndouble(2); // 4 (cached)\ncalls;     // 1\n```",
+              "starterCode": {
+                "javascript": "function memoize(fn) {\n  // your code here\n}\n"
+              },
+              "tests": [
+                { "id": "t1", "expression": "memoize(x => x * 2)(4)", "expected": 8, "hidden": false },
+                { "id": "t2", "expression": "(() => { let calls = 0; const f = memoize(x => { calls++; return x * 2; }); f(2); f(2); f(3); return calls; })()", "expected": 2, "hidden": false },
+                { "id": "t3", "expression": "(() => { let calls = 0; const f = memoize((a, b) => { calls++; return a + b; }); f(1, 2); f(1, 2); f(2, 1); return calls; })()", "expected": 2, "hidden": true },
+                { "id": "t4", "expression": "(() => { const f = memoize((a, b) => a + b); return [f(1, 2), f(1, 2)]; })()", "expected": [3, 3], "hidden": true }
+              ],
+              "hints": [
+                "Use a `Map` and build a cache key from the arguments.",
+                "`JSON.stringify(args)` is a simple way to make a key."
+              ],
+              "tags": ["closures", "higher-order-functions", "caching"],
+              "timeLimitMs": 2000
+            }
+          ],
+          "interviewQuestions": [
+            {
+              "slug": "iq-explain-closure",
+              "title": "Explain closures with an example",
+              "type": "open",
+              "stage": "interview",
+              "difficulty": "easy",
+              "order": 1,
+              "runner": "none",
+              "statementMd": "What is a closure in JavaScript? Give a practical example of where you would use one.",
+              "modelAnswerMd": "A closure is a function bundled with references to the variables of the scope where it was created. It keeps those variables alive after the outer function returns.\n\nPractical uses: private state (a counter or a cache), function factories, and callbacks that need context such as event handlers.\n\n```js\nfunction makeCounter() {\n  let count = 0;\n  return () => ++count;\n}\n```",
+              "tags": ["closures"]
+            },
+            {
+              "slug": "iq-var-let-const",
+              "title": "var vs let vs const",
+              "type": "open",
+              "stage": "interview",
+              "difficulty": "easy",
+              "order": 2,
+              "runner": "none",
+              "statementMd": "What are the differences between `var`, `let` and `const`?",
+              "modelAnswerMd": "- `var` is function scoped, is hoisted and initialised as `undefined`, and can be redeclared.\n- `let` is block scoped and cannot be redeclared in the same scope. Using it before its declaration throws (temporal dead zone).\n- `const` is block scoped like `let`, but the binding cannot be reassigned. The value itself can still be mutated if it is an object or array.\n\nDefault to `const`, use `let` when you need to reassign.",
+              "tags": ["var", "let", "const", "scope"]
+            },
+            {
+              "slug": "iq-hoisting",
+              "title": "What is hoisting?",
+              "type": "open",
+              "stage": "interview",
+              "difficulty": "medium",
+              "order": 3,
+              "runner": "none",
+              "statementMd": "What is hoisting? How do function declarations, `var` and `let` behave differently?",
+              "modelAnswerMd": "Hoisting means declarations are registered before the code runs. Function declarations are hoisted with their body, so they can be called before they appear. `var` is hoisted and set to `undefined`. `let` and `const` are hoisted but stay uninitialised until their line runs, so accessing them early throws a `ReferenceError` (the temporal dead zone).",
+              "tags": ["hoisting", "scope"]
+            }
+          ]
+        },
+        {
+          "slug": "arrays-and-array-methods",
+          "title": "Arrays and Array Methods",
+          "summary": "Store lists of values and transform them with map, filter, reduce and friends.",
+          "order": 2,
+          "estimatedMinutes": 75,
+          "status": "published",
+          "lesson": {
+            "title": "Arrays and Array Methods",
+            "estimatedMinutes": 20,
+            "contentMd": "# Arrays and Array Methods\n\nAn **array** is an ordered list of values.\n\n```js\nconst nums = [3, 1, 4, 1, 5];\nnums[0];      // 3\nnums.length;  // 5\n```\n\n## Methods that change the array (mutating)\n\n```js\nnums.push(9);   // add to the end\nnums.pop();     // remove from the end\nnums.sort();    // sorts in place\n```\n\n## Methods that return something new (non-mutating)\n\n```js\nnums.map(n => n * 2);          // transform every item\nnums.filter(n => n % 2 === 0); // keep items that pass a test\nnums.reduce((sum, n) => sum + n, 0); // combine into one value\n```\n\n## Watch out: default sort\n\n`sort()` without a function compares items as **strings**.\n\n```js\n[10, 9, 1].sort();              // [1, 10, 9]\n[10, 9, 1].sort((a, b) => a - b); // [1, 9, 10]\n```\n\n## Key points\n\n- Know which methods mutate the original array.\n- `map`, `filter` and `reduce` are the tools you will use most.\n- Always pass a compare function when sorting numbers."
+          },
+          "checks": [
+            {
+              "slug": "check-non-mutating",
+              "title": "Which method leaves the array alone?",
+              "type": "mcq",
+              "stage": "check",
+              "difficulty": "easy",
+              "order": 1,
+              "points": 5,
+              "runner": "none",
+              "statementMd": "Which of these methods does **not** change the original array?",
+              "options": [
+                { "id": "a", "text": "push" },
+                { "id": "b", "text": "splice" },
+                { "id": "c", "text": "map" },
+                { "id": "d", "text": "sort" }
+              ],
+              "correctOptionIds": ["c"],
+              "explanationMd": "`map` returns a new array. `push`, `splice` and `sort` all modify the array they are called on.",
+              "tags": ["mutation", "map"]
+            },
+            {
+              "slug": "check-default-sort",
+              "title": "Default sort surprise",
+              "type": "mcq",
+              "stage": "check",
+              "difficulty": "easy",
+              "order": 2,
+              "points": 5,
+              "runner": "none",
+              "statementMd": "What does `[10, 9, 1].sort()` return?",
+              "options": [
+                { "id": "a", "text": "[1, 9, 10]" },
+                { "id": "b", "text": "[10, 9, 1]" },
+                { "id": "c", "text": "[1, 10, 9]" },
+                { "id": "d", "text": "[9, 10, 1]" }
+              ],
+              "correctOptionIds": ["c"],
+              "explanationMd": "Without a compare function, items are converted to strings and sorted by character order: '1' < '10' < '9'.",
+              "tags": ["sort"]
+            }
+          ],
+          "problems": [
+            {
+              "slug": "sum-even-numbers",
+              "title": "Sum of Even Numbers",
+              "type": "coding",
+              "stage": "practice",
+              "difficulty": "easy",
+              "order": 1,
+              "points": 10,
+              "runner": "iframe-js",
+              "functionName": "sumEvenNumbers",
+              "statementMd": "Write `sumEvenNumbers(nums)` that returns the sum of all even numbers in the array. Return `0` if there are none.\n\n```js\nsumEvenNumbers([1, 2, 3, 4]); // 6\n```",
+              "starterCode": {
+                "javascript": "function sumEvenNumbers(nums) {\n  // your code here\n}\n"
+              },
+              "tests": [
+                { "id": "t1", "expression": "sumEvenNumbers([1, 2, 3, 4])", "expected": 6, "hidden": false },
+                { "id": "t2", "expression": "sumEvenNumbers([])", "expected": 0, "hidden": false },
+                { "id": "t3", "expression": "sumEvenNumbers([7, 9])", "expected": 0, "hidden": true },
+                { "id": "t4", "expression": "sumEvenNumbers([-2, -4, 5])", "expected": -6, "hidden": true }
+              ],
+              "hints": ["Try `filter` to keep evens, then `reduce` to add them up."],
+              "tags": ["arrays", "filter", "reduce"],
+              "timeLimitMs": 2000
+            },
+            {
+              "slug": "group-by-length",
+              "title": "Group Words by Length",
+              "type": "coding",
+              "stage": "practice",
+              "difficulty": "medium",
+              "order": 2,
+              "points": 20,
+              "runner": "iframe-js",
+              "functionName": "groupByLength",
+              "statementMd": "Write `groupByLength(words)` that returns an object whose keys are word lengths and whose values are arrays of the words with that length, in their original order.\n\n```js\ngroupByLength(['tea', 'go', 'sun', 'be']);\n// { 3: ['tea', 'sun'], 2: ['go', 'be'] }\n```",
+              "starterCode": {
+                "javascript": "function groupByLength(words) {\n  // your code here\n}\n"
+              },
+              "tests": [
+                { "id": "t1", "expression": "groupByLength(['tea', 'go', 'sun', 'be'])", "expected": { "3": ["tea", "sun"], "2": ["go", "be"] }, "hidden": false },
+                { "id": "t2", "expression": "groupByLength([])", "expected": {}, "hidden": false },
+                { "id": "t3", "expression": "groupByLength(['a', 'b', 'cc'])", "expected": { "1": ["a", "b"], "2": ["cc"] }, "hidden": true }
+              ],
+              "hints": [
+                "`reduce` with an object as the starting value works well here.",
+                "Check whether `acc[word.length]` exists before pushing."
+              ],
+              "tags": ["arrays", "objects", "reduce"],
+              "timeLimitMs": 2000
+            },
+            {
+              "slug": "deep-flatten",
+              "title": "Deep Flatten",
+              "type": "coding",
+              "stage": "practice",
+              "difficulty": "hard",
+              "order": 3,
+              "points": 30,
+              "runner": "iframe-js",
+              "functionName": "flatten",
+              "statementMd": "Write `flatten(arr)` that flattens an array of any nesting depth into a single array. You may **not** use `Array.prototype.flat`.\n\n```js\nflatten([1, [2, [3, [4]]]]); // [1, 2, 3, 4]\n```",
+              "starterCode": {
+                "javascript": "function flatten(arr) {\n  // your code here\n}\n"
+              },
+              "forbiddenPatterns": ["\\.flat\\s*\\("],
+              "tests": [
+                { "id": "t1", "expression": "flatten([1, [2, [3, [4]]]])", "expected": [1, 2, 3, 4], "hidden": false },
+                { "id": "t2", "expression": "flatten([])", "expected": [], "hidden": false },
+                { "id": "t3", "expression": "flatten([[[]], [1], [[2, [3]]]])", "expected": [1, 2, 3], "hidden": true },
+                { "id": "t4", "expression": "flatten([1, 2, 3])", "expected": [1, 2, 3], "hidden": true }
+              ],
+              "hints": [
+                "Think recursively: if an item is an array, flatten it too.",
+                "`Array.isArray(item)` tells you whether to recurse."
+              ],
+              "tags": ["arrays", "recursion"],
+              "timeLimitMs": 2000
+            }
+          ],
+          "interviewQuestions": [
+            {
+              "slug": "iq-map-vs-foreach",
+              "title": "map vs forEach",
+              "type": "open",
+              "stage": "interview",
+              "difficulty": "easy",
+              "order": 1,
+              "runner": "none",
+              "statementMd": "What is the difference between `map` and `forEach`? When would you pick each?",
+              "modelAnswerMd": "`map` returns a **new array** with the result of the callback for every item, so use it to transform data. `forEach` returns `undefined` and is used for side effects such as logging or updating something outside. `map` can be chained (`arr.map(...).filter(...)`), `forEach` cannot.",
+              "tags": ["map", "forEach"]
+            },
+            {
+              "slug": "iq-default-sort",
+              "title": "Default behaviour of sort",
+              "type": "open",
+              "stage": "interview",
+              "difficulty": "medium",
+              "order": 2,
+              "runner": "none",
+              "statementMd": "Why does `[10, 9, 1].sort()` return `[1, 10, 9]`, and how do you sort numbers correctly?",
+              "modelAnswerMd": "By default `sort` converts items to strings and compares them by UTF-16 order, so `'10'` comes before `'9'`. To sort numbers, pass a compare function: `arr.sort((a, b) => a - b)` for ascending order. Remember `sort` mutates the array in place. Use `[...arr].sort(...)` to keep the original.",
+              "tags": ["sort"]
+            },
+            {
+              "slug": "iq-reduce",
+              "title": "Explain reduce",
+              "type": "open",
+              "stage": "interview",
+              "difficulty": "medium",
+              "order": 3,
+              "runner": "none",
+              "statementMd": "Explain how `reduce` works. Show how you would use it to sum an array and to count occurrences.",
+              "modelAnswerMd": "`reduce(callback, initialValue)` walks the array and carries an **accumulator** from one step to the next. The callback receives `(accumulator, item)` and returns the new accumulator.\n\n```js\nconst sum = nums.reduce((acc, n) => acc + n, 0);\nconst counts = words.reduce((acc, w) => {\n  acc[w] = (acc[w] || 0) + 1;\n  return acc;\n}, {});\n```\n\nAlways pass an initial value. Without it, an empty array throws an error.",
+              "tags": ["reduce"]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
