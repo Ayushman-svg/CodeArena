@@ -106,7 +106,7 @@ The MVP is done when all of these are true:
 1. A new user can register, log in, log out, and stay logged in across page refreshes.
 2. A user can open a track, module and topic and read a Markdown lesson.
 3. A user can solve at least one problem of each kind: DSA coding via Judge0 in **each** of Java, C++, C and Python; web problems via the iframe runner in each of HTML, CSS, JavaScript, DOM and React; and MCQ.
-4. Submitting code returns a verdict (Accepted, Wrong Answer, Runtime Error, Time Limit Exceeded, Compilation Error) with results for sample test cases. Hidden test case inputs and outputs are never sent to the browser.
+4. Submitting code returns a verdict (Accepted, Wrong Answer, Runtime Error, Time Limit Exceeded, Compilation Error) with results for sample test cases. Hidden test cases are never sent to the browser for Judge0-graded problems (all DSA problems and JavaScript problems). For HTML, CSS, DOM and React problems, hidden assertions are sent to the browser only at submit time and are not shown in the UI.
 5. Closing the browser and returning later shows **Continue where you left off** and lands the user on the exact lesson or problem.
 6. The dashboard shows a progress graph with real data (for example, problems solved over time and completion per track).
 
