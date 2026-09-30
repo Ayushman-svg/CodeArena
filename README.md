@@ -8,7 +8,7 @@ Learners move through every topic in a fixed order:
 
 They can register, log in, resume exactly where they left off, and track their growth on a progress graph.
 
-> Status: **Phase 1, Planning and Design** (in progress)
+> Status: **Phase 1, Planning and Design** complete. Phase 2 (backend) is next.
 
 ---
 
@@ -16,14 +16,14 @@ They can register, log in, resume exactly where they left off, and track their g
 
 | Layer          | Technology                                                        |
 | -------------- | ----------------------------------------------------------------- |
-| Frontend       | React, React Router, Monaco Editor                                |
+| Frontend       | React (Vite), React Router, TanStack Query, Monaco Editor, Recharts |
 | Backend        | Node.js, Express                                                  |
 | Database       | MongoDB with Mongoose                                             |
-| Auth           | JWT (access token) with bcrypt password hashing                   |
-| Code execution | Judge0 (Java, C++, C, Python); sandboxed iframe with assertions (HTML, CSS, JS, DOM, React) |
+| Auth           | JWT (Bearer token) with bcrypt password hashing                   |
+| Code execution | Judge0 (Java, C++, C, Python and server-side JavaScript grading); sandboxed iframe (HTML, CSS, DOM, React) |
 | Content        | Lessons written in Markdown                                       |
 
-## Tracks (eventually)
+## Tracks
 
 HTML · CSS · JavaScript · DOM · React · MERN · DSA in Java · DSA in C++ · DSA in C · DSA in Python
 
@@ -54,27 +54,37 @@ HTML · CSS · JavaScript · DOM · React · MERN · DSA in Java · DSA in C++ �
 ## Repository Structure
 
 ```
-codepath/
-├── client/     # React app (Phase 3+)
+CodeArena/
+├── client/     # React app (Phase 3)
 ├── server/     # Express API, Mongoose models, seed data
 ├── docs/       # Planning and design documents
 ├── .gitignore
 └── README.md
 ```
 
+## Documentation
+
+| Document | Contents |
+| -------- | -------- |
+| [docs/01-scope.md](docs/01-scope.md) | Goals, MVP vs v2 vs later, non-goals, risks, success criteria |
+| [docs/02-content-structure.md](docs/02-content-structure.md) | Track, module, topic hierarchy, learning flow, problem types |
+| [docs/03-data-models.md](docs/03-data-models.md) | Collections, fields, indexes, relationships |
+| [docs/04-wireframes.md](docs/04-wireframes.md) | Screens, user flow, routes, React components |
+| [docs/05-architecture.md](docs/05-architecture.md) | Folder structure, REST API, auth, code execution, environment variables |
+
 ## Phase Checklist
 
-- [ ] **Phase 1: Planning and Design**
-  - [ ] Step 1: Repository setup
-  - [ ] Step 2: Scope and feature list
-  - [ ] Step 3: Content hierarchy and learning flow
-  - [ ] Step 4: Data models
-  - [ ] Step 5: Wireframes and user flow
-  - [ ] Step 6: API and architecture plan
-- [ ] **Phase 2: Backend** (auth, content APIs)
+- [x] **Phase 1: Planning and Design**
+  - [x] Step 1: Repository setup
+  - [x] Step 2: Scope and feature list
+  - [x] Step 3: Content hierarchy and learning flow
+  - [x] Step 4: Data models
+  - [x] Step 5: Wireframes and user flow
+  - [x] Step 6: API and architecture plan
+- [ ] **Phase 2: Backend** (auth, content APIs, progress writes, stage gates)
 - [ ] **Phase 3: Frontend** (auth, dashboard, lessons)
 - [ ] **Phase 4: Code execution** (Judge0, iframe sandbox, submissions)
-- [ ] **Phase 5: Progress and stats** (resume, graphs)
+- [ ] **Phase 5: Stats and graphs** (dashboard numbers, progress page)
 - [ ] **Phase 6: v2 features**
 - [ ] **Phase 7: Deployment**
 
@@ -82,11 +92,14 @@ codepath/
 
 Setup instructions will be added in Phase 2. For server configuration, copy `server/.env.example` to `server/.env` and fill in the values.
 
-## Documentation
+To validate the data models against the sample content (no database needed):
 
-Design documents are added to `docs/` as Phase 1 progresses.
+```bash
+cd server
+npm install
+npm run check:models
+```
 
 ## License
 
 To be decided.
-
