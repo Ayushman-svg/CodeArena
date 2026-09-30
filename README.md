@@ -1,4 +1,4 @@
-# CodePath
+# CodeArena
 
 A coding-learning platform that combines a structured course with a LeetCode-style practice arena in one app.
 
